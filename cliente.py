@@ -1,13 +1,17 @@
-#criando a aprte do cliente
-from socket import *
+#criando a parte do cliente
+import socket
 
-host = gethostname()
-port =55551
+HOST='localhost'
+#HOST = '127.0.0.1'
+PORT = 50000
 
-cli=socket(AF_INET, SOCK_STREAM)
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#pedindo conexão
+s.connect((HOST, PORT))
+#enviar dados
+s.sendall(str.encode('Está conectano'))
+#Gravando dados
+data=s.recv(1024)
 
-cli.connect((host, port))
+print('Conexão estabelecida', data.decode())
 
-while 1:
-  msg=input("Digite algo: ")
-  cli.send(msg.encode())

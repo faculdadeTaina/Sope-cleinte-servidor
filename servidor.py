@@ -1,19 +1,22 @@
 #criando um servidor simples
-from socket import *
+#criando a aprte do cliente
+import socket 
+#import cliente
+HOST ='localhost'
+PORT=50000
 
-host = gethostname()
-port= 55551;
+s=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen()
 
-print(f'HOST: {host}, PORT {port}')
+print('Aguardado conexão de um cliente')
+conn, ender = s.accept()
 
-serv=socket(AF_INET, SOCK_STREAM);
-
-serv.bind((host, port))
-
-serv.listen(5)
-
-while 1:
-  con, adr =serv.accept()
-  while 1:
-    msg=con.recv(1024)
-    print(msg = msg.decode())
+print('Conectado em', ender)
+while True:
+  data=conn.recv(1024)
+  if not data:
+    print('Fechando a conexão')
+    conn.close()
+    break
+  conn.sendall(data)
